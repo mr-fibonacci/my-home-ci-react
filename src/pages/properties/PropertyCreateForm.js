@@ -14,6 +14,7 @@ import {
 import { Button, Image } from "react-bootstrap";
 import { axiosReq } from "../../api/axiosDefaults";
 import { useHistory } from "react-router-dom";
+import Asset from "../../components/Asset";
 
 const PropertyCreateForm = () => {
   useRedirect("loggedOut");
@@ -104,10 +105,10 @@ const PropertyCreateForm = () => {
           </>
         ) : (
           <Form.Label
-            className="d-flex justify-content-center my-0 py-3 border border-primary"
+            className="d-flex justify-content-center my-0 py-3 border border-white rounded"
             htmlFor="image-upload"
           >
-            <Image src={upload} />
+            <Asset src={upload} message="Click or tap to upload an image" />
           </Form.Label>
         )}
 
@@ -317,7 +318,7 @@ const PropertyCreateForm = () => {
       ))}
       <Row>
         <Col sm={6}>
-          <Button className="mb-2" block>
+          <Button className="mb-2" block onClick={() => history.goBack()}>
             cancel
           </Button>
         </Col>

@@ -8,14 +8,27 @@ import SignInForm from "./pages/auth/SignInForm";
 import SignUpForm from "./pages/auth/SignUpForm";
 import PropertyListPage from "./pages/properties/PropertyListPage";
 import PropertyCreateForm from "./pages/properties/PropertyCreateForm";
+import { useCurrentUser } from "./contexts/CurrentUserContext";
 
 function App() {
+  const currentUser = useCurrentUser();
+  const profile_id = currentUser?.profile_id || "";
+
   return (
     <div className={styles.App}>
       <NavBar />
       <Container className={styles.Main}>
         <Switch>
-          <Route exact path="/" render={() => <PropertyListPage />} />
+          <Route
+            exact
+            path="/"
+            render={() => <PropertyListPage profile_id="" />}
+          />
+          <Route
+            exact
+            path="/liked"
+            render={() => <PropertyListPage profile_id={profile_id} />}
+          />
           <Route
             exact
             path="/properties/create"
