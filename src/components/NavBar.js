@@ -103,17 +103,9 @@ const NavBar = () => {
               exact
               className={styles.NavLink}
               activeClassName={styles.Active}
-              to="/buy"
+              to="/"
             >
-              <i className="fas fa-dollar-sign"></i>Buy
-            </NavLink>
-            <NavLink
-              exact
-              className={styles.NavLink}
-              activeClassName={styles.Active}
-              to="/rent"
-            >
-              <i className="fas fa-coins"></i>Rent
+              <i className="fas fa-home"></i>Properties
             </NavLink>
 
             {currentUser ? loggedInIcons : loggedOutIcons}

@@ -16,6 +16,17 @@ export const fetchMoreData = async (resource, setResource) => {
   } catch (err) {}
 };
 
+export const cityOptions = [
+  "Dublin",
+  "Cork",
+  "Limerick",
+  "Galway",
+  "Waterford",
+];
+export const propertyOptions = ["apartment", "house", "studio"];
+export const contractOptions = ["sale", "rent"];
+export const berOptions = ["A", "B", "C", "D", "E", "F", "G"];
+
 export const setTokenTimestamp = (data) => {
   const refreshTokenTimestamp = jwtDecode(data?.refresh_token).exp;
   localStorage.setItem("refreshTokenTimestamp", refreshTokenTimestamp);
