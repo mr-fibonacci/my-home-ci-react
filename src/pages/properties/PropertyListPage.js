@@ -134,7 +134,13 @@ const PropertyListPage = ({ profile_id }) => {
           <InfiniteScroll
             children={properties.results.map((property) => {
               const { id } = property;
-              return <Property key={id} {...property} />;
+              return (
+                <Property
+                  key={id}
+                  {...property}
+                  setProperties={setProperties}
+                />
+              );
             })}
             dataLength={properties.results.length}
             loader={<Asset spinner />}

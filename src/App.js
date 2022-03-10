@@ -8,6 +8,7 @@ import SignInForm from "./pages/auth/SignInForm";
 import SignUpForm from "./pages/auth/SignUpForm";
 import PropertyListPage from "./pages/properties/PropertyListPage";
 import PropertyCreateForm from "./pages/properties/PropertyCreateForm";
+import PropertyEditForm from "./pages/properties/PropertyEditForm";
 import { useCurrentUser } from "./contexts/CurrentUserContext";
 
 function App() {
@@ -33,6 +34,11 @@ function App() {
             exact
             path="/properties/create"
             render={() => <PropertyCreateForm />}
+          />
+          <Route
+            exact
+            path="/properties/edit/:id"
+            render={() => <PropertyEditForm />}
           />
           <Route exact path="/signin" render={() => <SignInForm />} />
           <Route exact path="/signup" render={() => <SignUpForm />} />
