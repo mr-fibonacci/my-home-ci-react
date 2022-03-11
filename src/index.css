@@ -20,3 +20,18 @@ code {
   transition: color ease-in-out 0.3s;
   cursor: pointer;
 }
+
+.nav-pills .nav-link.active,
+.nav-pills .show > .nav-link {
+  color: #fff;
+  border-radius: 100px;
+  background-color: #2142b2;
+}
+
+.nav-pills {
+  justify-content: center;
+}
+
+.nav-pills .nav-item {
+  margin: 0px 10px;
+}

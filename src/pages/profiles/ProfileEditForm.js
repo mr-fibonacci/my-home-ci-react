@@ -92,7 +92,11 @@ const ProfileEditForm = () => {
   return (
     <Form onSubmit={handleSubmit}>
       <Form.Group className="my-0 text-center">
-        <Image className="mw-100 mb-3" roundedCircle src={image} />
+        <Row>
+          <Col xs={{ span: 8, offset: 2 }} sm={{ span: 6, offset: 3 }}>
+            <Image className="mw-100 mb-3" roundedCircle src={image} />
+          </Col>
+        </Row>
         <div>
           <Form.Label className={`btn btn-primary`} htmlFor="image-upload">
             Change the image

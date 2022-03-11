@@ -2,6 +2,8 @@ import styles from "./App.module.css";
 import "./api/axiosDefaults";
 import NavBar from "./components/NavBar";
 import Container from "react-bootstrap/Container";
+import Col from "react-bootstrap/Col";
+import Row from "react-bootstrap/Row";
 import { Switch } from "react-router-dom";
 import { Route } from "react-router-dom";
 import SignInForm from "./pages/auth/SignInForm";
@@ -11,6 +13,7 @@ import PropertyCreateForm from "./pages/properties/PropertyCreateForm";
 import PropertyEditForm from "./pages/properties/PropertyEditForm";
 import { useCurrentUser } from "./contexts/CurrentUserContext";
 import ProfileEditForm from "./pages/profiles/ProfileEditForm";
+import ProfilePage from "./pages/profiles/ProfilePage";
 
 function App() {
   const currentUser = useCurrentUser();
@@ -20,35 +23,44 @@ function App() {
     <div className={styles.App}>
       <NavBar />
       <Container className={styles.Main}>
-        <Switch>
-          <Route
-            exact
-            path="/"
-            render={() => <PropertyListPage profile_id="" />}
-          />
-          <Route
-            exact
-            path="/liked"
-            render={() => <PropertyListPage profile_id={profile_id} />}
-          />
-          <Route
-            exact
-            path="/properties/create"
-            render={() => <PropertyCreateForm />}
-          />
-          <Route
-            exact
-            path="/properties/edit/:id"
-            render={() => <PropertyEditForm />}
-          />
-          <Route
-            exact
-            path="/profiles/edit/:id"
-            render={() => <ProfileEditForm />}
-          />
-          <Route exact path="/signin" render={() => <SignInForm />} />
-          <Route exact path="/signup" render={() => <SignUpForm />} />
-        </Switch>
+        <Row>
+          <Col md={{ span: 10, offset: 1 }} lg={{ span: 8, offset: 2 }}>
+            <Switch>
+              <Route
+                exact
+                path="/"
+                render={() => <PropertyListPage profile_id="" />}
+              />
+              <Route
+                exact
+                path="/liked"
+                render={() => <PropertyListPage profile_id={profile_id} />}
+              />
+              <Route
+                exact
+                path="/properties/create"
+                render={() => <PropertyCreateForm />}
+              />
+              <Route
+                exact
+                path="/properties/edit/:id"
+                render={() => <PropertyEditForm />}
+              />
+              <Route
+                exact
+                path="/profiles/:id"
+                render={() => <ProfilePage />}
+              />
+              <Route
+                exact
+                path="/profiles/edit/:id"
+                render={() => <ProfileEditForm />}
+              />
+              <Route exact path="/signin" render={() => <SignInForm />} />
+              <Route exact path="/signup" render={() => <SignUpForm />} />
+            </Switch>
+          </Col>
+        </Row>
       </Container>
     </div>
   );
