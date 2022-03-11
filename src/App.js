@@ -10,6 +10,7 @@ import PropertyListPage from "./pages/properties/PropertyListPage";
 import PropertyCreateForm from "./pages/properties/PropertyCreateForm";
 import PropertyEditForm from "./pages/properties/PropertyEditForm";
 import { useCurrentUser } from "./contexts/CurrentUserContext";
+import ProfileEditForm from "./pages/profiles/ProfileEditForm";
 
 function App() {
   const currentUser = useCurrentUser();
@@ -39,6 +40,11 @@ function App() {
             exact
             path="/properties/edit/:id"
             render={() => <PropertyEditForm />}
+          />
+          <Route
+            exact
+            path="/profiles/edit/:id"
+            render={() => <ProfileEditForm />}
           />
           <Route exact path="/signin" render={() => <SignInForm />} />
           <Route exact path="/signup" render={() => <SignUpForm />} />

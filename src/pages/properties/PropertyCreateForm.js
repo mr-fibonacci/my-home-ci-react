@@ -11,7 +11,8 @@ import {
   contractOptions,
   propertyOptions,
 } from "../../utils/utils";
-import { Button, Image } from "react-bootstrap";
+import Button from "react-bootstrap/Button";
+import Image from "react-bootstrap/Image";
 import { axiosReq } from "../../api/axiosDefaults";
 import { useHistory } from "react-router-dom";
 import Asset from "../../components/Asset";

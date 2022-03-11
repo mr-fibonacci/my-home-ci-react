@@ -9,7 +9,8 @@ import {
   contractOptions,
   propertyOptions,
 } from "../../utils/utils";
-import { Button, Image } from "react-bootstrap";
+import Button from "react-bootstrap/Button";
+import Image from "react-bootstrap/Image";
 import { axiosReq } from "../../api/axiosDefaults";
 import { useHistory } from "react-router-dom";
 import { useParams } from "react-router-dom";
@@ -82,7 +83,7 @@ const PropertyEditForm = () => {
     };
 
     handleMount();
-  }, []);
+  }, [id, history]);
 
   const handleChange = (e) => {
     setPropertyData((prevData) => ({
@@ -352,7 +353,7 @@ const PropertyEditForm = () => {
         </Col>
         <Col sm={6}>
           <Button className="mb-2" block type="submit">
-            update
+            save
           </Button>
         </Col>
       </Row>
