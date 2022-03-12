@@ -1,14 +1,11 @@
 import React, { useEffect, useState } from "react";
-import {
-  Card,
-  Col,
-  Container,
-  Image,
-  Row,
-  Spinner,
-  Tab,
-  Tabs,
-} from "react-bootstrap";
+import Card from "react-bootstrap/Card";
+import Col from "react-bootstrap/Col";
+import Row from "react-bootstrap/Row";
+import Container from "react-bootstrap/Container";
+import Image from "react-bootstrap/Image";
+import Tab from "react-bootstrap/Tab";
+import Tabs from "react-bootstrap/Tabs";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { useParams } from "react-router-dom";
 import { axiosReq } from "../../api/axiosDefaults";
@@ -85,7 +82,7 @@ const ProfilePage = () => {
             <Card.Body className="pt-0">
               <hr className="d-none d-lg-block" />
               <Card.Text>
-                <i className="fas fa-comment-alt" />
+                <i className="fas fa-comment-alt fa-flip-horizontal" />
                 {description}
               </Card.Text>
             </Card.Body>
@@ -104,7 +101,7 @@ const ProfilePage = () => {
                   fetchMoreData(postedProperties, setPostedProperties)
                 }
                 hasMore={!!postedProperties.next}
-                loader={<Asset children={<Spinner animation="border" />} />}
+                loader={<Asset spinner />}
               >
                 {postedProperties?.results.length ? (
                   postedProperties?.results.map((property) => (
@@ -116,7 +113,7 @@ const ProfilePage = () => {
                   ))
                 ) : (
                   <Asset
-                    children={<NoResults />}
+                    src={NoResults}
                     message={`No results found, ${profile?.owner} hasn't posted yet.`}
                   />
                 )}
@@ -131,7 +128,7 @@ const ProfilePage = () => {
                     fetchMoreData(likedProperties, setLikedProperties)
                   }
                   hasMore={!!likedProperties.next}
-                  loader={<Asset children={<Spinner animation="border" />} />}
+                  loader={<Asset spinner />}
                 >
                   <Container fluid>
                     {likedProperties?.results.length ? (
@@ -144,8 +141,8 @@ const ProfilePage = () => {
                       ))
                     ) : (
                       <Asset
-                        children={<NoResults />}
-                        message={`No profiles found, no users are following ${profile?.owner} yet.`}
+                        src={NoResults}
+                        message={`No results found, ${profile?.name} has not liked a listing yet.`}
                       />
                     )}
                   </Container>

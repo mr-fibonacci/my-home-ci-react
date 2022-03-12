@@ -14,6 +14,7 @@ import PropertyEditForm from "./pages/properties/PropertyEditForm";
 import { useCurrentUser } from "./contexts/CurrentUserContext";
 import ProfileEditForm from "./pages/profiles/ProfileEditForm";
 import ProfilePage from "./pages/profiles/ProfilePage";
+import PropertyPage from "./pages/properties/PropertyPage";
 
 function App() {
   const currentUser = useCurrentUser();
@@ -40,6 +41,11 @@ function App() {
                 exact
                 path="/properties/create"
                 render={() => <PropertyCreateForm />}
+              />
+              <Route
+                exact
+                path="/properties/:id"
+                render={() => <PropertyPage />}
               />
               <Route
                 exact
