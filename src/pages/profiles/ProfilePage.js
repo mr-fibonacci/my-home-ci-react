@@ -14,6 +14,8 @@ import { fetchMoreData } from "../../utils/utils";
 import NoResults from "../../assets/no-results.png";
 import Property from "../properties/Property";
 
+import styles from "../../styles/ProfilePage.module.css";
+
 const ProfilePage = () => {
   const { id } = useParams();
   const [hasLoaded, setHasLoaded] = useState(false);
@@ -55,8 +57,7 @@ const ProfilePage = () => {
             <Row>
               <Col className="my-auto" lg={6}>
                 <Image
-                  className="p-3"
-                  style={{ maxHeight: 350, margin: "auto" }}
+                  className={`p-3 ${styles.ProfileImage}`}
                   src={image}
                   fluid
                   roundedCircle

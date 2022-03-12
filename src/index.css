@@ -35,3 +35,11 @@ code {
 .nav-pills .nav-item {
   margin: 0px 10px;
 }
+
+.pl-20 {
+  padding-left: 20px;
+}
+
+.pr-20 {
+  padding-right: 20px;
+}

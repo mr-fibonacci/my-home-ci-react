@@ -6,6 +6,8 @@ import Image from "react-bootstrap/Image";
 import Card from "react-bootstrap/Card";
 import { Link } from "react-router-dom";
 
+import styles from "../../styles/Profile.module.css";
+
 const Profile = ({ id, image, name, phone_number, email, description }) => {
   return (
     <Link to={`/profiles/${id}`}>
@@ -18,10 +20,15 @@ const Profile = ({ id, image, name, phone_number, email, description }) => {
         </Card.Body>
         <Container>
           <Row className="d-flex justify-content-center">
-            <Col xs={5} sm={4} className="my-auto">
-              <Image src={image} roundedCircle fluid />
+            <Col xs={5} md={6} className="my-auto pl-20">
+              <Image
+                src={image}
+                roundedCircle
+                fluid
+                className={styles.ProfileImage}
+              />
             </Col>
-            <Col className="my-auto">
+            <Col className="my-auto pr-20">
               <Card.Body className="px-0 p-0">
                 <Card.Text>
                   <i className="fas fa-id-badge" />
@@ -38,11 +45,13 @@ const Profile = ({ id, image, name, phone_number, email, description }) => {
               </Card.Body>
             </Col>
           </Row>
-          <Card.Text className="d-block d-sm-none">
+          <div className="d-block d-sm-none">
             <hr />
-            <i className="fas fa-envelope" />
-            {email}
-          </Card.Text>
+            <Card.Text>
+              <i className="fas fa-envelope" />
+              {email}
+            </Card.Text>
+          </div>
         </Container>
         <Card.Body className="pt-0">
           <hr />
