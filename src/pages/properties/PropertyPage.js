@@ -36,6 +36,7 @@ const PropertyPage = () => {
         profile_name={name}
         profile_image={image}
         setProperties={setPropertyData}
+        propertyPage
       />
       <Card className="mb-3 shadow">
         <Card.Body>{description}</Card.Body>

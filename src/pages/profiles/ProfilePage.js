@@ -7,6 +7,7 @@ import Image from "react-bootstrap/Image";
 import Tab from "react-bootstrap/Tab";
 import Tabs from "react-bootstrap/Tabs";
 import InfiniteScroll from "react-infinite-scroll-component";
+import { useHistory } from "react-router-dom";
 import { useParams } from "react-router-dom";
 import { axiosReq } from "../../api/axiosDefaults";
 import Asset from "../../components/Asset";
@@ -15,8 +16,10 @@ import NoResults from "../../assets/no-results.png";
 import Property from "../properties/Property";
 
 import styles from "../../styles/ProfilePage.module.css";
+import { MoreDropdown } from "../../components/MoreDropdown";
 
 const ProfilePage = () => {
+  const history = useHistory();
   const { id } = useParams();
   const [hasLoaded, setHasLoaded] = useState(false);
   const [activeKey, setActiveKey] = useState("posted");
@@ -54,6 +57,10 @@ const ProfilePage = () => {
       {hasLoaded ? (
         <>
           <Card className="text-center">
+            <MoreDropdown
+              standalone
+              handleEdit={() => history.push(`/profiles/${id}/edit`)}
+            />
             <Row>
               <Col className="my-auto" lg={6}>
                 <Image

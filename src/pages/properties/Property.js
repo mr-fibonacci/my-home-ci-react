@@ -8,6 +8,7 @@ import { axiosRes } from "../../api/axiosDefaults";
 import { useCurrentUser } from "../../contexts/CurrentUserContext";
 
 import Avatar from "../../components/Avatar";
+import { MoreDropdown } from "../../components/MoreDropdown";
 
 const Property = ({
   id,
@@ -25,6 +26,7 @@ const Property = ({
   profile_name,
   profile_image,
   setProperties,
+  propertyPage,
 }) => {
   const history = useHistory();
   const currentUser = useCurrentUser();
@@ -93,12 +95,16 @@ const Property = ({
   const likeBar = (
     <div className="mr-3 bg-white rounded opaque hoverable">
       {is_owner ? (
-        <OverlayTrigger
-          placement="top"
-          overlay={<Tooltip>You can't like your own properties!</Tooltip>}
-        >
-          <i className="fas fa-heart p-3" />
-        </OverlayTrigger>
+        propertyPage ? (
+          <MoreDropdown handleEdit={handleEdit} handleDelete={handleDelete} />
+        ) : (
+          <OverlayTrigger
+            placement="top"
+            overlay={<Tooltip>You can't like your own properties!</Tooltip>}
+          >
+            <i className="fas fa-heart p-3" />
+          </OverlayTrigger>
+        )
       ) : like_id ? (
         <i className="fas fa-heart p-3 text-danger" onClick={handleUnlike} />
       ) : currentUser ? (
