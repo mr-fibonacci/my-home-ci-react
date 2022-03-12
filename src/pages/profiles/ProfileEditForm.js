@@ -9,10 +9,13 @@ import { useHistory } from "react-router-dom";
 import { useParams } from "react-router-dom";
 import { axiosReq } from "../../api/axiosDefaults";
 import { useSetCurrentUser } from "../../contexts/CurrentUserContext";
+import Asset from "../../components/Asset";
 
 const ProfileEditForm = () => {
   const history = useHistory();
   const { id } = useParams();
+  const [hasLoaded, setHasLoaded] = useState(false);
+
   const setCurrentUser = useSetCurrentUser();
   const [errors, setErrors] = useState({});
   const [profileData, setProfileData] = useState({
@@ -30,18 +33,23 @@ const ProfileEditForm = () => {
         const { data } = await axiosReq.get(`/profiles/${id}/`);
         const { image, name, phone_number, email, description, is_owner } =
           data;
-        is_owner
-          ? setProfileData({
-              image,
-              name,
-              phone_number,
-              email,
-              description,
-            })
-          : history.goBack();
+
+        if (is_owner) {
+          setProfileData({
+            image,
+            name,
+            phone_number,
+            email,
+            description,
+          });
+          setHasLoaded(true);
+        } else {
+          history.goBack();
+        }
       } catch (err) {}
     };
 
+    setHasLoaded(false);
     handleMount();
   }, [id, history]);
 
@@ -89,7 +97,7 @@ const ProfileEditForm = () => {
     }
   };
 
-  return (
+  return hasLoaded ? (
     <Form onSubmit={handleSubmit}>
       <Form.Group className="my-0 text-center">
         <Row>
@@ -192,6 +200,8 @@ const ProfileEditForm = () => {
         </Col>
       </Row>
     </Form>
+  ) : (
+    <Asset spinner />
   );
 };
 

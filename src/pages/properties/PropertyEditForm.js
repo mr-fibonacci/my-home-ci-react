@@ -14,10 +14,13 @@ import Image from "react-bootstrap/Image";
 import { axiosReq } from "../../api/axiosDefaults";
 import { useHistory } from "react-router-dom";
 import { useParams } from "react-router-dom";
+import Asset from "../../components/Asset";
 
 const PropertyEditForm = () => {
   const history = useHistory();
   const { id } = useParams();
+  const [hasLoaded, setHasLoaded] = useState(false);
+
   const [errors, setErrors] = useState({});
   const [propertyData, setPropertyData] = useState({
     image: "",
@@ -64,24 +67,29 @@ const PropertyEditForm = () => {
           description,
           is_owner,
         } = data;
-        is_owner
-          ? setPropertyData({
-              image,
-              address,
-              city,
-              property_type,
-              contract,
-              price,
-              beds,
-              baths,
-              area,
-              ber,
-              description,
-            })
-          : history.goBack();
+
+        if (is_owner) {
+          setPropertyData({
+            image,
+            address,
+            city,
+            property_type,
+            contract,
+            price,
+            beds,
+            baths,
+            area,
+            ber,
+            description,
+          });
+          setHasLoaded(true);
+        } else {
+          history.goBack();
+        }
       } catch (err) {}
     };
 
+    setHasLoaded(false);
     handleMount();
   }, [id, history]);
 
@@ -131,7 +139,7 @@ const PropertyEditForm = () => {
     }
   };
 
-  return (
+  return hasLoaded ? (
     <Form onSubmit={handleSubmit}>
       <Form.Group className="my-0 text-center">
         <Image className="mw-100 mb-3" rounded src={image} />
@@ -358,6 +366,8 @@ const PropertyEditForm = () => {
         </Col>
       </Row>
     </Form>
+  ) : (
+    <Asset spinner />
   );
 };
 

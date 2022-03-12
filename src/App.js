@@ -49,7 +49,7 @@ function App() {
               />
               <Route
                 exact
-                path="/properties/edit/:id"
+                path="/properties/:id/edit"
                 render={() => <PropertyEditForm />}
               />
               <Route
@@ -59,7 +59,7 @@ function App() {
               />
               <Route
                 exact
-                path="/profiles/edit/:id"
+                path="/profiles/:id/edit"
                 render={() => <ProfileEditForm />}
               />
               <Route exact path="/signin" render={() => <SignInForm />} />

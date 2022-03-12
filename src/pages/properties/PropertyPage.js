@@ -25,6 +25,7 @@ const PropertyPage = () => {
       } catch (err) {}
     };
 
+    setHasLoaded(false);
     handleMount();
   }, [id]);
 
