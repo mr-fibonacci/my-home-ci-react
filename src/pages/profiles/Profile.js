@@ -19,8 +19,8 @@ const Profile = ({ id, image, name, phone_number, email, description }) => {
           <hr />
         </Card.Body>
         <Container>
-          <Row className="d-flex justify-content-center">
-            <Col xs={5} md={6} className="my-auto pl-20">
+          <Row className="d-flex justify-content-center pl-20 pr-20">
+            <Col xs={5} md={6} className="my-auto">
               <Image
                 src={image}
                 roundedCircle
@@ -28,26 +28,26 @@ const Profile = ({ id, image, name, phone_number, email, description }) => {
                 className={styles.ProfileImage}
               />
             </Col>
-            <Col className="my-auto pr-20">
+            <Col className="my-auto">
               <Card.Body className="px-0 p-0">
-                <Card.Text>
+                <Card.Text className="my-auto">
                   <i className="fas fa-id-badge" />
                   {name}
                 </Card.Text>
-                <Card.Text>
+                <Card.Text className="my-auto">
                   <i className="fas fa-phone-alt" />
                   {phone_number}
                 </Card.Text>
-                <Card.Text className="d-none d-sm-block">
+                <Card.Text className="d-none d-lg-block my-auto">
                   <i className="fas fa-envelope" />
                   {email}
                 </Card.Text>
               </Card.Body>
             </Col>
           </Row>
-          <div className="d-block d-sm-none">
+          <div className="d-block d-lg-none">
             <hr />
-            <Card.Text>
+            <Card.Text className="my-auto">
               <i className="fas fa-envelope" />
               {email}
             </Card.Text>
@@ -55,7 +55,7 @@ const Profile = ({ id, image, name, phone_number, email, description }) => {
         </Container>
         <Card.Body className="pt-0">
           <hr />
-          <Card.Text>
+          <Card.Text className="my-auto">
             <i className="fas fa-comment-alt fa-flip-horizontal" />
             {description}
           </Card.Text>

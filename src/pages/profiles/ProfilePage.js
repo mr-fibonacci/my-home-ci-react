@@ -60,10 +60,12 @@ const ProfilePage = () => {
         hasFetchedProfile ? (
           <>
             <Card className="text-center">
-              <MoreDropdown
-                standalone
-                handleEdit={() => history.push(`/profiles/${id}/edit`)}
-              />
+              {is_owner && (
+                <MoreDropdown
+                  standalone
+                  handleEdit={() => history.push(`/profiles/${id}/edit`)}
+                />
+              )}
               <Row>
                 <Col className="my-auto" lg={6}>
                   <Image

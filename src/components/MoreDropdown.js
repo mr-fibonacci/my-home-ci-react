@@ -5,7 +5,7 @@ import styles from "../styles/MoreDropdown.module.css";
 // The forwardRef is important!!
 // Dropdown needs access to the DOM node in order to position the Menu
 const ThreeDots = React.forwardRef(({ onClick }, ref) => (
-  <div className="bg-white rounded opaque hoverable text-center">
+  <div className="bg-white rounded opaque text-center">
     <i
       onClick={(e) => {
         e.preventDefault();
@@ -20,7 +20,7 @@ const ThreeDots = React.forwardRef(({ onClick }, ref) => (
 export const MoreDropdown = ({ handleEdit, handleDelete, standalone }) => {
   return (
     <Dropdown
-      className={`ml-auto mr-3 hoverable ${styles.Absolute} ${
+      className={`ml-auto mr-3 ${styles.Absolute} ${
         standalone && "mt-3 border border-gray rounded"
       }`}
       drop="left"

@@ -93,7 +93,7 @@ const Property = ({
   );
 
   const likeBar = (
-    <div className="mr-3 bg-white rounded opaque hoverable">
+    <div className="mr-3 bg-white rounded opaque">
       {is_owner ? (
         propertyPage ? (
           <MoreDropdown handleEdit={handleEdit} handleDelete={handleDelete} />

@@ -16,8 +16,12 @@ code {
   opacity: 0.85;
 }
 
-.hoverable:hover i {
+i {
   transition: color ease-in-out 0.3s;
+}
+
+i:hover {
+  color: #555555;
   cursor: pointer;
 }
 
