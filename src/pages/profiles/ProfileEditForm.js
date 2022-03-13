@@ -18,13 +18,9 @@ const ProfileEditForm = () => {
 
   const setCurrentUser = useSetCurrentUser();
   const [errors, setErrors] = useState({});
-  const [profileData, setProfileData] = useState({
-    image: "",
-    name: "",
-    phone_number: undefined,
-    email: "",
-    description: "",
-  });
+  const [profileData, setProfileData] = useState({});
+
+  const hasFetchedProfileData = !!Object.keys(profileData).length;
   const { image, name, phone_number, email, description } = profileData;
 
   useEffect(() => {
@@ -42,11 +38,13 @@ const ProfileEditForm = () => {
             email,
             description,
           });
-          setHasLoaded(true);
         } else {
           history.goBack();
         }
-      } catch (err) {}
+      } catch (err) {
+      } finally {
+        setHasLoaded(true);
+      }
     };
 
     setHasLoaded(false);
@@ -98,108 +96,112 @@ const ProfileEditForm = () => {
   };
 
   return hasLoaded ? (
-    <Form onSubmit={handleSubmit}>
-      <Form.Group className="my-0 text-center">
+    hasFetchedProfileData ? (
+      <Form onSubmit={handleSubmit}>
+        <Form.Group className="my-0 text-center">
+          <Row>
+            <Col xs={{ span: 8, offset: 2 }} sm={{ span: 6, offset: 3 }}>
+              <Image className="mw-100 mb-3" roundedCircle src={image} />
+            </Col>
+          </Row>
+          <div>
+            <Form.Label className={`btn btn-primary`} htmlFor="image-upload">
+              Change the image
+            </Form.Label>
+          </div>
+
+          <Form.File
+            id="image-upload"
+            accept="image/*"
+            onChange={handleChangeImage}
+            ref={imageInput}
+          />
+        </Form.Group>
+        {errors?.image?.map((message, idx) => (
+          <Alert variant="warning" key={idx}>
+            {message}
+          </Alert>
+        ))}
         <Row>
-          <Col xs={{ span: 8, offset: 2 }} sm={{ span: 6, offset: 3 }}>
-            <Image className="mw-100 mb-3" roundedCircle src={image} />
+          <Col sm={6}>
+            <Form.Group controlId="name">
+              <Form.Label>Name</Form.Label>
+              <Form.Control
+                type="text"
+                name="name"
+                value={name}
+                onChange={handleChange}
+              />
+            </Form.Group>
+            {errors?.name?.map((message, idx) => (
+              <Alert variant="warning" key={idx}>
+                {message}
+              </Alert>
+            ))}
+          </Col>
+
+          <Col sm={6}>
+            <Form.Group controlId="phoneNumber">
+              <Form.Label>Phone number</Form.Label>
+              <Form.Control
+                type="number"
+                name="phone_number"
+                value={phone_number || ""}
+                onChange={handleChange}
+              />
+            </Form.Group>
+            {errors?.phone_number?.map((message, idx) => (
+              <Alert variant="warning" key={idx}>
+                {message}
+              </Alert>
+            ))}
           </Col>
         </Row>
-        <div>
-          <Form.Label className={`btn btn-primary`} htmlFor="image-upload">
-            Change the image
-          </Form.Label>
-        </div>
-
-        <Form.File
-          id="image-upload"
-          accept="image/*"
-          onChange={handleChangeImage}
-          ref={imageInput}
-        />
-      </Form.Group>
-      {errors?.image?.map((message, idx) => (
-        <Alert variant="warning" key={idx}>
-          {message}
-        </Alert>
-      ))}
-      <Row>
-        <Col sm={6}>
-          <Form.Group controlId="name">
-            <Form.Label>Name</Form.Label>
-            <Form.Control
-              type="text"
-              name="name"
-              value={name}
-              onChange={handleChange}
-            />
-          </Form.Group>
-          {errors?.name?.map((message, idx) => (
-            <Alert variant="warning" key={idx}>
-              {message}
-            </Alert>
-          ))}
-        </Col>
-
-        <Col sm={6}>
-          <Form.Group controlId="phoneNumber">
-            <Form.Label>Phone number</Form.Label>
-            <Form.Control
-              type="number"
-              name="phone_number"
-              value={phone_number || ""}
-              onChange={handleChange}
-            />
-          </Form.Group>
-          {errors?.phone_number?.map((message, idx) => (
-            <Alert variant="warning" key={idx}>
-              {message}
-            </Alert>
-          ))}
-        </Col>
-      </Row>
-      <Form.Group controlId="email">
-        <Form.Label>Email</Form.Label>
-        <Form.Control
-          type="email"
-          name="email"
-          value={email}
-          onChange={handleChange}
-        />
-      </Form.Group>
-      {errors?.email?.map((message, idx) => (
-        <Alert variant="warning" key={idx}>
-          {message}
-        </Alert>
-      ))}
-      <Form.Group>
-        <Form.Label>Description</Form.Label>
-        <Form.Control
-          as="textarea"
-          rows={3}
-          name="description"
-          value={description}
-          onChange={handleChange}
-        />
-      </Form.Group>
-      {errors?.description?.map((message, idx) => (
-        <Alert variant="warning" key={idx}>
-          {message}
-        </Alert>
-      ))}
-      <Row>
-        <Col sm={6}>
-          <Button className="mb-2" block onClick={() => history.goBack()}>
-            cancel
-          </Button>
-        </Col>
-        <Col sm={6}>
-          <Button className="mb-2" block type="submit">
-            save
-          </Button>
-        </Col>
-      </Row>
-    </Form>
+        <Form.Group controlId="email">
+          <Form.Label>Email</Form.Label>
+          <Form.Control
+            type="email"
+            name="email"
+            value={email}
+            onChange={handleChange}
+          />
+        </Form.Group>
+        {errors?.email?.map((message, idx) => (
+          <Alert variant="warning" key={idx}>
+            {message}
+          </Alert>
+        ))}
+        <Form.Group>
+          <Form.Label>Description</Form.Label>
+          <Form.Control
+            as="textarea"
+            rows={3}
+            name="description"
+            value={description}
+            onChange={handleChange}
+          />
+        </Form.Group>
+        {errors?.description?.map((message, idx) => (
+          <Alert variant="warning" key={idx}>
+            {message}
+          </Alert>
+        ))}
+        <Row>
+          <Col sm={6}>
+            <Button className="mb-2" block onClick={() => history.goBack()}>
+              cancel
+            </Button>
+          </Col>
+          <Col sm={6}>
+            <Button className="mb-2" block type="submit">
+              save
+            </Button>
+          </Col>
+        </Row>
+      </Form>
+    ) : (
+      <Asset noResults message="No profile found with the given id." />
+    )
   ) : (
     <Asset spinner />
   );

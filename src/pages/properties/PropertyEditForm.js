@@ -22,19 +22,7 @@ const PropertyEditForm = () => {
   const [hasLoaded, setHasLoaded] = useState(false);
 
   const [errors, setErrors] = useState({});
-  const [propertyData, setPropertyData] = useState({
-    image: "",
-    address: "",
-    city: "",
-    property_type: "",
-    contract: "",
-    price: 0,
-    beds: 0,
-    baths: 0,
-    area: 0,
-    ber: "",
-    description: "",
-  });
+  const [propertyData, setPropertyData] = useState({});
   const {
     image,
     address,
@@ -48,6 +36,8 @@ const PropertyEditForm = () => {
     ber,
     description,
   } = propertyData;
+
+  const hasFetchedPropertyData = !!Object.keys(propertyData).length;
 
   useEffect(() => {
     const handleMount = async () => {
@@ -82,11 +72,13 @@ const PropertyEditForm = () => {
             ber,
             description,
           });
-          setHasLoaded(true);
         } else {
           history.goBack();
         }
-      } catch (err) {}
+      } catch (err) {
+      } finally {
+        setHasLoaded(true);
+      }
     };
 
     setHasLoaded(false);
@@ -140,232 +132,236 @@ const PropertyEditForm = () => {
   };
 
   return hasLoaded ? (
-    <Form onSubmit={handleSubmit}>
-      <Form.Group className="my-0 text-center">
-        <Image className="mw-100 mb-3" rounded src={image} />
-        <div>
-          <Form.Label className={`btn btn-primary`} htmlFor="image-upload">
-            Change the image
-          </Form.Label>
-        </div>
+    hasFetchedPropertyData ? (
+      <Form onSubmit={handleSubmit}>
+        <Form.Group className="my-0 text-center">
+          <Image className="mw-100 mb-3" rounded src={image} />
+          <div>
+            <Form.Label className={`btn btn-primary`} htmlFor="image-upload">
+              Change the image
+            </Form.Label>
+          </div>
 
-        <Form.File
-          id="image-upload"
-          accept="image/*"
-          onChange={handleChangeImage}
-          ref={imageInput}
-        />
-      </Form.Group>
-      {errors?.image?.map((message, idx) => (
-        <Alert variant="warning" key={idx}>
-          {message}
-        </Alert>
-      ))}
+          <Form.File
+            id="image-upload"
+            accept="image/*"
+            onChange={handleChangeImage}
+            ref={imageInput}
+          />
+        </Form.Group>
+        {errors?.image?.map((message, idx) => (
+          <Alert variant="warning" key={idx}>
+            {message}
+          </Alert>
+        ))}
 
-      <Form.Group>
-        <Form.Label>Address</Form.Label>
-        <Form.Control
-          as="textarea"
-          rows={1}
-          name="address"
-          value={address}
-          onChange={handleChange}
-        />
-      </Form.Group>
-      {errors?.address?.map((message, idx) => (
-        <Alert variant="warning" key={idx}>
-          {message}
-        </Alert>
-      ))}
+        <Form.Group>
+          <Form.Label>Address</Form.Label>
+          <Form.Control
+            as="textarea"
+            rows={1}
+            name="address"
+            value={address}
+            onChange={handleChange}
+          />
+        </Form.Group>
+        {errors?.address?.map((message, idx) => (
+          <Alert variant="warning" key={idx}>
+            {message}
+          </Alert>
+        ))}
 
-      <Row>
-        <Col sm={6}>
-          <Form.Group controlId="city">
-            <Form.Label>City</Form.Label>
-            <Form.Control
-              as="select"
-              name="city"
-              value={city}
-              onChange={handleChange}
-            >
-              <option value="">please choose one...</option>
-              {cityOptions.map((city) => (
-                <option key={city}>{city}</option>
-              ))}
-            </Form.Control>
-          </Form.Group>
-          {errors?.city?.map((message, idx) => (
-            <Alert variant="warning" key={idx}>
-              {message}
-            </Alert>
-          ))}
-        </Col>
-        <Col sm={6}>
-          <Form.Group controlId="propertyType">
-            <Form.Label>Property type</Form.Label>
-            <Form.Control
-              as="select"
-              name="property_type"
-              value={property_type}
-              onChange={handleChange}
-            >
-              <option value="">please choose one...</option>
-              {propertyOptions.map((propertyOption) => (
-                <option key={propertyOption}>{propertyOption}</option>
-              ))}
-            </Form.Control>
-          </Form.Group>
-          {errors?.property_type?.map((message, idx) => (
-            <Alert variant="warning" key={idx}>
-              {message}
-            </Alert>
-          ))}
-        </Col>
-      </Row>
+        <Row>
+          <Col sm={6}>
+            <Form.Group controlId="city">
+              <Form.Label>City</Form.Label>
+              <Form.Control
+                as="select"
+                name="city"
+                value={city}
+                onChange={handleChange}
+              >
+                <option value="">please choose one...</option>
+                {cityOptions.map((city) => (
+                  <option key={city}>{city}</option>
+                ))}
+              </Form.Control>
+            </Form.Group>
+            {errors?.city?.map((message, idx) => (
+              <Alert variant="warning" key={idx}>
+                {message}
+              </Alert>
+            ))}
+          </Col>
+          <Col sm={6}>
+            <Form.Group controlId="propertyType">
+              <Form.Label>Property type</Form.Label>
+              <Form.Control
+                as="select"
+                name="property_type"
+                value={property_type}
+                onChange={handleChange}
+              >
+                <option value="">please choose one...</option>
+                {propertyOptions.map((propertyOption) => (
+                  <option key={propertyOption}>{propertyOption}</option>
+                ))}
+              </Form.Control>
+            </Form.Group>
+            {errors?.property_type?.map((message, idx) => (
+              <Alert variant="warning" key={idx}>
+                {message}
+              </Alert>
+            ))}
+          </Col>
+        </Row>
 
-      <Row>
-        <Col sm={6}>
-          <Form.Group controlId="contractType">
-            <Form.Label>Contract type</Form.Label>
-            <Form.Control
-              as="select"
-              name="contract"
-              value={contract}
-              onChange={handleChange}
-            >
-              <option value="">please choose one...</option>
-              {contractOptions.map((contractOption) => (
-                <option key={contractOption}>{contractOption}</option>
-              ))}
-            </Form.Control>
-          </Form.Group>
-          {errors?.contract?.map((message, idx) => (
-            <Alert variant="warning" key={idx}>
-              {message}
-            </Alert>
-          ))}
-        </Col>
-        <Col sm={6}>
-          <Form.Group controlId="price">
-            <Form.Label>Price</Form.Label>
-            <Form.Control
-              type="number"
-              name="price"
-              value={price}
-              onChange={handleChange}
-            />
-          </Form.Group>
-          {errors?.price?.map((message, idx) => (
-            <Alert variant="warning" key={idx}>
-              {message}
-            </Alert>
-          ))}
-        </Col>
-      </Row>
+        <Row>
+          <Col sm={6}>
+            <Form.Group controlId="contractType">
+              <Form.Label>Contract type</Form.Label>
+              <Form.Control
+                as="select"
+                name="contract"
+                value={contract}
+                onChange={handleChange}
+              >
+                <option value="">please choose one...</option>
+                {contractOptions.map((contractOption) => (
+                  <option key={contractOption}>{contractOption}</option>
+                ))}
+              </Form.Control>
+            </Form.Group>
+            {errors?.contract?.map((message, idx) => (
+              <Alert variant="warning" key={idx}>
+                {message}
+              </Alert>
+            ))}
+          </Col>
+          <Col sm={6}>
+            <Form.Group controlId="price">
+              <Form.Label>Price</Form.Label>
+              <Form.Control
+                type="number"
+                name="price"
+                value={price}
+                onChange={handleChange}
+              />
+            </Form.Group>
+            {errors?.price?.map((message, idx) => (
+              <Alert variant="warning" key={idx}>
+                {message}
+              </Alert>
+            ))}
+          </Col>
+        </Row>
 
-      <Row>
-        <Col sm={6}>
-          <Form.Group controlId="beds">
-            <Form.Label>Beds</Form.Label>
-            <Form.Control
-              type="number"
-              name="beds"
-              value={beds}
-              onChange={handleChange}
-            />
-          </Form.Group>
-          {errors?.beds?.map((message, idx) => (
-            <Alert variant="warning" key={idx}>
-              {message}
-            </Alert>
-          ))}
-        </Col>
-        <Col sm={6}>
-          <Form.Group controlId="baths">
-            <Form.Label>Baths</Form.Label>
-            <Form.Control
-              type="number"
-              name="baths"
-              value={baths}
-              onChange={handleChange}
-            />
-          </Form.Group>
-          {errors?.baths?.map((message, idx) => (
-            <Alert variant="warning" key={idx}>
-              {message}
-            </Alert>
-          ))}
-        </Col>
-      </Row>
+        <Row>
+          <Col sm={6}>
+            <Form.Group controlId="beds">
+              <Form.Label>Beds</Form.Label>
+              <Form.Control
+                type="number"
+                name="beds"
+                value={beds}
+                onChange={handleChange}
+              />
+            </Form.Group>
+            {errors?.beds?.map((message, idx) => (
+              <Alert variant="warning" key={idx}>
+                {message}
+              </Alert>
+            ))}
+          </Col>
+          <Col sm={6}>
+            <Form.Group controlId="baths">
+              <Form.Label>Baths</Form.Label>
+              <Form.Control
+                type="number"
+                name="baths"
+                value={baths}
+                onChange={handleChange}
+              />
+            </Form.Group>
+            {errors?.baths?.map((message, idx) => (
+              <Alert variant="warning" key={idx}>
+                {message}
+              </Alert>
+            ))}
+          </Col>
+        </Row>
 
-      <Row>
-        <Col sm={6}>
-          <Form.Group controlId="area">
-            <Form.Label>Area</Form.Label>
-            <Form.Control
-              type="number"
-              name="area"
-              value={area}
-              onChange={handleChange}
-            />
-          </Form.Group>
-          {errors?.area?.map((message, idx) => (
-            <Alert variant="warning" key={idx}>
-              {message}
-            </Alert>
-          ))}
-        </Col>
-        <Col sm={6}>
-          <Form.Group controlId="berType">
-            <Form.Label>BER rating</Form.Label>
-            <Form.Control
-              as="select"
-              name="ber"
-              value={ber}
-              onChange={handleChange}
-            >
-              <option value="">please choose one...</option>
-              {berOptions.map((berOption) => (
-                <option key={berOption}>{berOption}</option>
-              ))}
-            </Form.Control>
-          </Form.Group>
-          {errors?.ber?.map((message, idx) => (
-            <Alert variant="warning" key={idx}>
-              {message}
-            </Alert>
-          ))}
-        </Col>
-      </Row>
+        <Row>
+          <Col sm={6}>
+            <Form.Group controlId="area">
+              <Form.Label>Area</Form.Label>
+              <Form.Control
+                type="number"
+                name="area"
+                value={area}
+                onChange={handleChange}
+              />
+            </Form.Group>
+            {errors?.area?.map((message, idx) => (
+              <Alert variant="warning" key={idx}>
+                {message}
+              </Alert>
+            ))}
+          </Col>
+          <Col sm={6}>
+            <Form.Group controlId="berType">
+              <Form.Label>BER rating</Form.Label>
+              <Form.Control
+                as="select"
+                name="ber"
+                value={ber}
+                onChange={handleChange}
+              >
+                <option value="">please choose one...</option>
+                {berOptions.map((berOption) => (
+                  <option key={berOption}>{berOption}</option>
+                ))}
+              </Form.Control>
+            </Form.Group>
+            {errors?.ber?.map((message, idx) => (
+              <Alert variant="warning" key={idx}>
+                {message}
+              </Alert>
+            ))}
+          </Col>
+        </Row>
 
-      <Form.Group>
-        <Form.Label>Description</Form.Label>
-        <Form.Control
-          as="textarea"
-          rows={3}
-          name="description"
-          value={description}
-          onChange={handleChange}
-        />
-      </Form.Group>
-      {errors?.description?.map((message, idx) => (
-        <Alert variant="warning" key={idx}>
-          {message}
-        </Alert>
-      ))}
-      <Row>
-        <Col sm={6}>
-          <Button className="mb-2" block onClick={() => history.goBack()}>
-            cancel
-          </Button>
-        </Col>
-        <Col sm={6}>
-          <Button className="mb-2" block type="submit">
-            save
-          </Button>
-        </Col>
-      </Row>
-    </Form>
+        <Form.Group>
+          <Form.Label>Description</Form.Label>
+          <Form.Control
+            as="textarea"
+            rows={3}
+            name="description"
+            value={description}
+            onChange={handleChange}
+          />
+        </Form.Group>
+        {errors?.description?.map((message, idx) => (
+          <Alert variant="warning" key={idx}>
+            {message}
+          </Alert>
+        ))}
+        <Row>
+          <Col sm={6}>
+            <Button className="mb-2" block onClick={() => history.goBack()}>
+              cancel
+            </Button>
+          </Col>
+          <Col sm={6}>
+            <Button className="mb-2" block type="submit">
+              save
+            </Button>
+          </Col>
+        </Row>
+      </Form>
+    ) : (
+      <Asset noResults message="No property found with the given id." />
+    )
   ) : (
     <Asset spinner />
   );

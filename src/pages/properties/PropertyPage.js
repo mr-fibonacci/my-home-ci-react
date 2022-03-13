@@ -10,19 +10,24 @@ const PropertyPage = () => {
   const { id } = useParams();
   const [hasLoaded, setHasLoaded] = useState(false);
   const [propertyData, setPropertyData] = useState({
-    results: [{ profile: {} }],
+    results: [{}],
   });
   const property = propertyData.results[0];
-  const { profile, description } = property;
-  const { name, image } = profile;
+  const hasFetchedProperty = !!Object.keys(property).length;
+
+  const description = property.description;
+  const name = property?.profile?.name;
+  const image = property?.profile?.image;
 
   useEffect(() => {
     const handleMount = async () => {
       try {
         const { data } = await axiosReq.get(`/properties/${id}/`);
         setPropertyData({ results: [data] });
+      } catch (err) {
+      } finally {
         setHasLoaded(true);
-      } catch (err) {}
+      }
     };
 
     setHasLoaded(false);
@@ -30,19 +35,23 @@ const PropertyPage = () => {
   }, [id]);
 
   return hasLoaded ? (
-    <>
-      <Property
-        {...property}
-        profile_name={name}
-        profile_image={image}
-        setProperties={setPropertyData}
-        propertyPage
-      />
-      <Card className="mb-3 shadow">
-        <Card.Body>{description}</Card.Body>
-      </Card>
-      <Profile {...profile} />
-    </>
+    hasFetchedProperty ? (
+      <>
+        <Property
+          {...property}
+          profile_name={name}
+          profile_image={image}
+          setProperties={setPropertyData}
+          propertyPage
+        />
+        <Card className="mb-3 shadow">
+          <Card.Body>{description}</Card.Body>
+        </Card>
+        <Profile {...property?.profile} />
+      </>
+    ) : (
+      <Asset noResults message="No property found with the given id." />
+    )
   ) : (
     <Asset spinner />
   );

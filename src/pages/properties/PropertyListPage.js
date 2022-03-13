@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import NoResults from "../../assets/no-results.png";
 import Form from "react-bootstrap/Form";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
@@ -159,7 +158,7 @@ const PropertyListPage = ({ profile_id }) => {
           />
         ) : (
           <Asset
-            src={NoResults}
+            noResults
             message="No properties found matching given criteria."
           />
         )
