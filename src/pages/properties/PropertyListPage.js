@@ -13,8 +13,10 @@ import {
 import Asset from "../../components/Asset";
 import Property from "./Property";
 import InfiniteScroll from "react-infinite-scroll-component";
+import { useCurrentUser } from "../../contexts/CurrentUserContext";
 
 const PropertyListPage = ({ profile_id }) => {
+  const currentUser = useCurrentUser();
   const [formData, setFormData] = useState({
     city: "",
     property_type: "",
@@ -57,7 +59,15 @@ const PropertyListPage = ({ profile_id }) => {
     return () => {
       clearTimeout(timer);
     };
-  }, [formData, city, property_type, contract, max_price, profile_id]);
+  }, [
+    currentUser,
+    formData,
+    city,
+    property_type,
+    contract,
+    max_price,
+    profile_id,
+  ]);
 
   return (
     <>
