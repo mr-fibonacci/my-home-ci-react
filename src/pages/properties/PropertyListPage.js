@@ -23,6 +23,7 @@ const PropertyListPage = ({ profile_id }) => {
     max_price: 700000,
   });
   const { city, property_type, contract, max_price } = formData;
+  const isRent = contract === "rent";
 
   const [properties, setProperties] = useState({
     results: [],
@@ -35,6 +36,13 @@ const PropertyListPage = ({ profile_id }) => {
       ...prevData,
       [e.target.name]: e.target.value,
     }));
+
+  useEffect(() => {
+    setFormData((prevState) => ({
+      ...prevState,
+      max_price: isRent ? 5000 : 700000,
+    }));
+  }, [isRent]);
 
   useEffect(() => {
     const fetchProperties = async () => {
@@ -127,9 +135,9 @@ const PropertyListPage = ({ profile_id }) => {
               <Form.Label>Max price: {max_price}</Form.Label>
               <Form.Control
                 type="range"
-                min={100000}
-                step={50000}
-                max={700000}
+                min={isRent ? 500 : 100000}
+                step={isRent ? 500 : 50000}
+                max={isRent ? 5000 : 700000}
                 name="max_price"
                 onChange={onChange}
                 value={max_price}
