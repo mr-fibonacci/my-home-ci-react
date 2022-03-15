@@ -15,6 +15,7 @@ import { useCurrentUser } from "./contexts/CurrentUserContext";
 import ProfileEditForm from "./pages/profiles/ProfileEditForm";
 import ProfilePage from "./pages/profiles/ProfilePage";
 import PropertyPage from "./pages/properties/PropertyPage";
+import NotFound from "./components/NotFound";
 
 function App() {
   const currentUser = useCurrentUser();
@@ -64,6 +65,7 @@ function App() {
               />
               <Route exact path="/signin" render={() => <SignInForm />} />
               <Route exact path="/signup" render={() => <SignUpForm />} />
+              <Route render={() => <NotFound />} />
             </Switch>
           </Col>
         </Row>
