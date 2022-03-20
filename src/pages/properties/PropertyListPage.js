@@ -2,6 +2,10 @@ import React, { useEffect, useState } from "react";
 import Form from "react-bootstrap/Form";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
+import Accordion from "react-bootstrap/Accordion";
+import AccordionCollapse from "react-bootstrap/AccordionCollapse";
+import Button from "react-bootstrap/Button";
+
 import { axiosReq } from "../../api/axiosDefaults";
 import {
   cityOptions,
@@ -16,6 +20,8 @@ import { useCurrentUser } from "../../contexts/CurrentUserContext";
 
 const PropertyListPage = ({ profile_id }) => {
   const currentUser = useCurrentUser();
+
+  const [isExpanded, setIsExpanded] = useState(true);
   const [formData, setFormData] = useState({
     city: "",
     property_type: "",
@@ -76,76 +82,93 @@ const PropertyListPage = ({ profile_id }) => {
     profile_id,
   ]);
 
+  const form = (
+    <Form>
+      <Row>
+        <Col sm={4}>
+          <Form.Group controlId="city">
+            <Form.Label>City</Form.Label>
+            <Form.Control
+              as="select"
+              name="city"
+              onChange={onChange}
+              value={city}
+            >
+              <option value="">any...</option>
+              {cityOptions.map((city) => (
+                <option key={city}>{city}</option>
+              ))}
+            </Form.Control>
+          </Form.Group>
+        </Col>
+        <Col sm={4}>
+          <Form.Group controlId="propertyType">
+            <Form.Label>Property type</Form.Label>
+            <Form.Control
+              as="select"
+              name="property_type"
+              onChange={onChange}
+              value={property_type}
+            >
+              <option value="">any...</option>
+              {propertyOptions.map((propertyOption) => (
+                <option key={propertyOption}>{propertyOption}</option>
+              ))}
+            </Form.Control>
+          </Form.Group>
+        </Col>
+        <Col sm={4}>
+          <Form.Group controlId="contractType">
+            <Form.Label>Contract type</Form.Label>
+            <Form.Control
+              as="select"
+              name="contract"
+              onChange={onChange}
+              value={contract}
+            >
+              <option value="">any...</option>
+              {contractOptions.map((contractOption) => (
+                <option key={contractOption}>{contractOption}</option>
+              ))}
+            </Form.Control>
+          </Form.Group>
+        </Col>
+      </Row>
+      <Row>
+        <Col>
+          <Form.Group controlId="maxPrice">
+            <Form.Label>Max price: {max_price}</Form.Label>
+            <Form.Control
+              type="range"
+              min={isRent ? 500 : 100000}
+              step={isRent ? 500 : 50000}
+              max={isRent ? 5000 : 700000}
+              name="max_price"
+              onChange={onChange}
+              value={max_price}
+            />
+          </Form.Group>
+        </Col>
+      </Row>
+    </Form>
+  );
+
   return (
     <>
-      <Form>
-        <Row>
-          <Col sm={4}>
-            <Form.Group controlId="city">
-              <Form.Label>City</Form.Label>
-              <Form.Control
-                as="select"
-                name="city"
-                onChange={onChange}
-                value={city}
-              >
-                <option value="">any...</option>
-                {cityOptions.map((city) => (
-                  <option key={city}>{city}</option>
-                ))}
-              </Form.Control>
-            </Form.Group>
-          </Col>
-          <Col sm={4}>
-            <Form.Group controlId="propertyType">
-              <Form.Label>Property type</Form.Label>
-              <Form.Control
-                as="select"
-                name="property_type"
-                onChange={onChange}
-                value={property_type}
-              >
-                <option value="">any...</option>
-                {propertyOptions.map((propertyOption) => (
-                  <option key={propertyOption}>{propertyOption}</option>
-                ))}
-              </Form.Control>
-            </Form.Group>
-          </Col>
-          <Col sm={4}>
-            <Form.Group controlId="contractType">
-              <Form.Label>Contract type</Form.Label>
-              <Form.Control
-                as="select"
-                name="contract"
-                onChange={onChange}
-                value={contract}
-              >
-                <option value="">any...</option>
-                {contractOptions.map((contractOption) => (
-                  <option key={contractOption}>{contractOption}</option>
-                ))}
-              </Form.Control>
-            </Form.Group>
-          </Col>
-        </Row>
-        <Row>
-          <Col>
-            <Form.Group controlId="maxPrice">
-              <Form.Label>Max price: {max_price}</Form.Label>
-              <Form.Control
-                type="range"
-                min={isRent ? 500 : 100000}
-                step={isRent ? 500 : 50000}
-                max={isRent ? 5000 : 700000}
-                name="max_price"
-                onChange={onChange}
-                value={max_price}
-              />
-            </Form.Group>
-          </Col>
-        </Row>
-      </Form>
+      <Accordion defaultActiveKey="0">
+        <Accordion.Toggle
+          onClick={() => setIsExpanded(!isExpanded)}
+          as={Button}
+          variant="secondary"
+          className="w-100 mb-3"
+          eventKey="0"
+        >
+          {isExpanded
+            ? "Click to hide the search form!"
+            : "Click to refine your search!"}
+        </Accordion.Toggle>
+        <AccordionCollapse eventKey="0">{form}</AccordionCollapse>
+      </Accordion>
       {hasLoaded ? (
         properties.results.length ? (
           <InfiniteScroll

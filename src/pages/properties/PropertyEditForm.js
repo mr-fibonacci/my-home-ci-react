@@ -137,7 +137,7 @@ const PropertyEditForm = () => {
         <Form.Group className="my-0 text-center">
           <Image className="mw-100 mb-3" rounded src={image} />
           <div>
-            <Form.Label className={`btn btn-primary`} htmlFor="image-upload">
+            <Form.Label className="btn btn-dark" htmlFor="image-upload">
               Change the image
             </Form.Label>
           </div>
@@ -348,12 +348,17 @@ const PropertyEditForm = () => {
         ))}
         <Row>
           <Col sm={6}>
-            <Button className="mb-2" block onClick={() => history.goBack()}>
+            <Button
+              variant="dark"
+              className="mb-2"
+              block
+              onClick={() => history.goBack()}
+            >
               cancel
             </Button>
           </Col>
           <Col sm={6}>
-            <Button className="mb-2" block type="submit">
+            <Button variant="dark" className="mb-2" block type="submit">
               save
             </Button>
           </Col>

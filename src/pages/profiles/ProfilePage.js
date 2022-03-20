@@ -77,26 +77,36 @@ const ProfilePage = () => {
                 </Col>
                 <Col className="my-auto" lg={6}>
                   <Card.Body className="pb-0">
-                    <Card.Title>
-                      <i className="fas fa-id-badge" />
-                      {name}
-                    </Card.Title>
+                    {name ? (
+                      <Card.Title>
+                        <i className="fas fa-id-badge" />
+                        {name}
+                      </Card.Title>
+                    ) : (
+                      <Card.Text>
+                        <i className="fas fa-id-badge" />
+                        <span className="font-italic">blank</span>
+                      </Card.Text>
+                    )}
+
                     <Card.Text>
                       <i className="fas fa-phone-alt" />
-                      {phone_number}
+                      {phone_number || (
+                        <span className="font-italic">blank</span>
+                      )}
                     </Card.Text>
                     <Card.Text>
                       <i className="fas fa-envelope" />
-                      {email}
+                      {email || <span className="font-italic">blank</span>}
                     </Card.Text>
                   </Card.Body>
                 </Col>
               </Row>
-              <Card.Body className="pt-0">
+              <Card.Body className="pt-lg-0">
                 <hr className="d-none d-lg-block" />
                 <Card.Text>
                   <i className="fas fa-comment-alt fa-flip-horizontal" />
-                  {description}
+                  {description || <span className="font-italic">blank</span>}
                 </Card.Text>
               </Card.Body>
             </Card>
@@ -127,7 +137,9 @@ const ProfilePage = () => {
                   ) : (
                     <Asset
                       noResults
-                      message={`No results found, ${profile?.owner} hasn't posted yet.`}
+                      message={`No results found, ${
+                        profile?.name || "the user"
+                      } hasn't posted yet.`}
                     />
                   )}
                 </InfiniteScroll>
@@ -155,7 +167,9 @@ const ProfilePage = () => {
                       ) : (
                         <Asset
                           noResults
-                          message={`No results found, ${profile?.name} has not liked a listing yet.`}
+                          message={`No results found, ${
+                            profile?.name || "the user"
+                          } hasn't liked a property yet.`}
                         />
                       )}
                     </Container>

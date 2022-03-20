@@ -20,7 +20,7 @@ const Profile = ({ id, image, name, phone_number, email, description }) => {
         </Card.Body>
         <Container>
           <Row className="d-flex justify-content-center pl-20 pr-20">
-            <Col xs={5} md={6} className="my-auto">
+            <Col xs={12} md={6} className="my-auto">
               <Image
                 src={image}
                 roundedCircle
@@ -29,7 +29,7 @@ const Profile = ({ id, image, name, phone_number, email, description }) => {
               />
             </Col>
             <Col className="my-auto">
-              <Card.Body className="px-0 p-0">
+              <Card.Body className="px-0 pb-0 pt-3 pt-md-0">
                 <Card.Text className="my-auto">
                   <i className="fas fa-id-badge" />
                   {name}

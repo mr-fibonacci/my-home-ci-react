@@ -10,6 +10,7 @@ import { useParams } from "react-router-dom";
 import { axiosReq } from "../../api/axiosDefaults";
 import { useSetCurrentUser } from "../../contexts/CurrentUserContext";
 import Asset from "../../components/Asset";
+import styles from "../../styles/ProfilePage.module.css";
 
 const ProfileEditForm = () => {
   const history = useHistory();
@@ -100,12 +101,16 @@ const ProfileEditForm = () => {
       <Form onSubmit={handleSubmit}>
         <Form.Group className="my-0 text-center">
           <Row>
-            <Col xs={{ span: 8, offset: 2 }} sm={{ span: 6, offset: 3 }}>
-              <Image className="mw-100 mb-3" roundedCircle src={image} />
+            <Col>
+              <Image
+                className={`mb-3 ${styles.ProfileImage}`}
+                roundedCircle
+                src={image}
+              />
             </Col>
           </Row>
           <div>
-            <Form.Label className={`btn btn-primary`} htmlFor="image-upload">
+            <Form.Label className="btn btn-dark" htmlFor="image-upload">
               Change the image
             </Form.Label>
           </div>
@@ -188,12 +193,17 @@ const ProfileEditForm = () => {
         ))}
         <Row>
           <Col sm={6}>
-            <Button className="mb-2" block onClick={() => history.goBack()}>
+            <Button
+              variant="dark"
+              className="mb-2"
+              block
+              onClick={() => history.goBack()}
+            >
               cancel
             </Button>
           </Col>
           <Col sm={6}>
-            <Button className="mb-2" block type="submit">
+            <Button variant="dark" className="mb-2" block type="submit">
               save
             </Button>
           </Col>
